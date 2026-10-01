@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#DC2626">
+  <meta name="description" content="FirstAidAssist — panduan pertolongan pertama, bencana, dan kesiapsiagaan yang cepat, jelas, dan siap digunakan kapan saja.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="FirstAidAssist">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="FirstAidAssist — Panduan Pertolongan Pertama">
+  <meta property="og:description" content="Panduan P3K, bencana, dan kesiapsiagaan yang cepat dan bisa dipakai offline.">
+  <meta property="og:image" content="icon-512.png"><!-- ganti dengan URL absolut setelah deploy -->
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <title>FirstAidAssist</title>
+</head>
+<body>
+<a class="skip-link" href="#app-main">Lewati ke konten utama</a>
+<div id="offline-banner" class="offline-banner" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+
+<!-- App Opening / Splash Screen -->
+<div id="welcome-overlay" class="welcome-overlay" aria-hidden="false">
+  <section class="splash-screen" role="status" aria-live="polite" aria-label="Membuka FirstAidAssist">
+    <div class="splash-glow splash-glow-one" aria-hidden="true"></div>
+    <div class="splash-glow splash-glow-two" aria-hidden="true"></div>
+    <img class="splash-logo" src="logo.png" alt="Logo FirstAidAssist">
+    <div class="splash-brand"><strong>FirstAid</strong><span>Assist</span></div>
+    <p class="splash-tagline">Panduan pertolongan pertama, kapan saja.</p>
+    <div class="splash-loader" aria-hidden="true"><span></span></div>
+    <small class="splash-status">Menyiapkan aplikasi...</small>
+  </section>
+</div>
+
+<header class="app-header">
+  <div class="header-inner">
+    <button class="brand-button" type="button" data-screen="home" aria-label="Kembali ke Beranda">
+      <img class="brand-logo" src="logo.png" alt="Logo FirstAidAssist">
+      <span><strong>FirstAid</strong><span class="brand-assist">Assist</span></span>
+    </button>
+    <div class="header-actions">
+      <span class="status-badge" id="header-status">● Offline Ready</span>
+      <span class="visually-hidden" id="network-announcement" role="status" aria-live="polite" aria-atomic="true"></span>
+      <button class="icon-button" id="theme-toggle" type="button" aria-label="Aktifkan mode gelap" aria-pressed="false">☾</button>
+      <button class="icon-button" type="button" data-screen="settings" aria-label="Buka pengaturan">⚙️</button>
+    </div>
+  </div>
+</header>
+
+<main id="app-main" class="app-main">
+  <!-- HOME -->
+  <section class="screen active" id="screen-home" aria-labelledby="home-title">
+    <div class="container page-pad">
+      <section class="home-background-card">
+        <div class="hero-copy">
+          <div>
+            <p class="eyebrow">🩺 PERTOLONGAN PERTAMA</p>
+            <h1 id="home-title">Siap membantu saat kamu membutuhkannya.</h1>
+            <p class="muted hero-subtitle">Panduan pertolongan pertama, bencana, dan kesiapsiagaan dalam satu aplikasi.</p>
+          </div>
+          <div class="offline-card"><span class="offline-dot"></span><div><strong>Offline Ready</strong><small>Panduan lokal tetap tersedia tanpa internet.</small></div></div>
+        </div>
+        <div class="dashboard-grid">
+          <article class="dashboard-card clock-card"><div class="dashboard-icon">🕐</div><div><span class="eyebrow">WAKTU SEKARANG</span><strong id="current-time">--:--:--</strong><span id="current-date" class="muted">--</span></div></article>
+          <article class="dashboard-card weather-card"><div class="dashboard-icon" aria-hidden="true">🌡️</div><div><span class="eyebrow">SUHU</span><strong id="current-temp">--°C</strong><span id="weather-location" class="muted" aria-live="polite" aria-atomic="true">Lokasi belum tersedia</span></div><button id="weather-refresh" type="button" class="mini-action" aria-label="Perbarui suhu lokal" title="Perbarui suhu lokal">↻</button></article>
+          <article class="dashboard-card readiness-card"><div class="dashboard-icon" aria-hidden="true">🚨</div><div><span class="eyebrow">BANTUAN CEPAT</span><strong>119</strong><span class="muted">Ambulans untuk keadaan medis darurat.</span></div><button class="mini-action" type="button" data-screen="sos" aria-label="Buka bantuan darurat SOS" title="Buka bantuan darurat SOS">→</button></article>
+        </div>
+      </section>
+
+      <form id="search-form" class="search-box" role="search">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <label for="home-search" class="visually-hidden">Apa yang terjadi?</label>
+        <input id="home-search" type="search" autocomplete="off" placeholder="Contoh: digigit ular, sakit gigi, kejang...">
+        <button class="search-submit" type="submit">Cari</button>
+      </form>
+
+      <div class="quick-actions" aria-label="Aksi cepat">
+        <button class="quick-action" type="button" data-screen="categories"><span>🩹</span><span>Panduan</span></button>
+        <button class="quick-action" type="button" data-screen="disasters"><span>🌪️</span><span>Bencana</span></button>
+        <button class="quick-action" type="button" data-screen="videos"><span>▶️</span><span>Video</span></button>
+        <button class="quick-action" type="button" data-screen="checklist"><span>🧰</span><span>Kotak P3K</span></button>
+        <button class="quick-action" type="button" data-screen="settings"><span>⚙️</span><span>Pengaturan</span></button>
+        <button class="quick-action danger" type="button" data-screen="sos"><span>🚨</span><span>SOS</span></button>
+      </div>
+
+      <div class="section-heading"><div><p class="eyebrow">KONDISI DARURAT</p><h2>Yang sedang terjadi?</h2></div><button class="text-button" type="button" data-screen="categories">Lihat semua →</button></div>
+      <div id="category-grid" class="category-grid" aria-label="Kategori pertolongan pertama"></div>
+
+      <section class="emergency-call-panel">
+        <div><p class="eyebrow white-eyebrow">BUTUH BANTUAN MEDIS?</p><h2>Hubungi layanan darurat dengan cepat.</h2><p>Untuk keadaan yang mengancam nyawa, jangan hanya mengandalkan aplikasi.</p></div>
+        <a class="btn btn-white btn-large" href="tel:119">☎️ Panggil Ambulans 119</a>
+        <div class="small-call-row"><a href="tel:112">112 — Darurat</a><a href="tel:110">110 — Polisi</a></div>
+      </section>
+
+      <section class="info-strip"><div class="info-icon">✓</div><div><strong>Prioritas: keselamatan</strong><p>Panduan ini membantu pertolongan awal. Cari bantuan profesional bila kondisi berat, memburuk, atau kamu ragu.</p></div></section>
+    </div>
+  </section>
+
+  <!-- SEARCH -->
+  <section class="screen" id="screen-search" aria-labelledby="search-title">
+    <div class="container page-pad">
+      <button class="back-button" type="button" data-screen="home">← Beranda</button>
+      <p class="eyebrow">🔎 PENCARIAN CEPAT</p><h1 id="search-title">Apa yang terjadi?</h1>
+      <form id="search-form-page" class="search-box"><span class="search-icon">⌕</span><label for="page-search" class="visually-hidden">Cari panduan</label><input id="page-search" type="search" placeholder="Misalnya: digigit ular"><button class="search-submit">Cari</button></form>
+      <div class="suggestion-row"><button type="button" class="chip suggestion-chip">digigit ular</button><button type="button" class="chip suggestion-chip">sakit gigi</button><button type="button" class="chip suggestion-chip">kejang</button><button type="button" class="chip suggestion-chip">mimisan</button><button type="button" class="chip suggestion-chip">sesak napas</button></div>
+      <div class="section-heading compact"><div><p class="eyebrow">HASIL</p><h2 id="search-result-heading">Panduan yang relevan</h2></div></div>
+      <div id="search-results" class="result-list" role="region" aria-label="Hasil pencarian" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- GUIDE -->
+  <section class="screen" id="screen-guide" aria-label="Panduan kondisi"><div class="container page-pad narrow-guide"><button class="back-button" type="button" data-screen="home">← Kembali</button><div id="guide-content"></div></div></section>
+
+  <!-- STEPS -->
+  <section class="screen emergency-screen" id="screen-steps" aria-labelledby="step-title"><div class="emergency-inner"><div class="step-topbar"><button class="ghost-light" type="button" data-screen="guide">← Panduan</button><div class="step-top-actions"><button class="ghost-light" type="button" id="step-video-button">▶️ Video</button><button class="ghost-light" type="button" data-screen="sos">🚨 SOS</button></div></div><div id="step-content" role="region" aria-label="Instruksi langkah demi langkah"></div></div></section>
+
+  <!-- CATEGORIES -->
+  <section class="screen" id="screen-categories" aria-labelledby="categories-title"><div class="container page-pad"><p class="eyebrow">🩹 PANDUAN PERTOLONGAN</p><h1 id="categories-title">Kondisi & Gejala</h1><p class="muted">Pilih kondisi yang paling mendekati situasi sekarang.</p><div class="page-shortcuts"><button class="chip" type="button" data-screen="videos">▶️ Video</button><button class="chip" type="button" data-screen="disasters">🌪️ Bencana</button><button class="chip" type="button" data-screen="checklist">🧰 P3K</button><button class="chip danger-chip" type="button" data-screen="sos">🚨 SOS</button></div><div id="category-page-grid" class="category-grid large"></div></div></section>
+
+  <!-- DISASTER -->
+  <section class="screen" id="screen-disasters" aria-labelledby="disaster-title"><div class="container page-pad"><p class="eyebrow">🌪️ KESIAPSIAGAAN</p><h1 id="disaster-title">Cara Mengatasi Bencana</h1><p class="muted">Panduan singkat untuk membantu kamu tetap tenang, melindungi diri, dan menghubungi bantuan.</p><div id="disaster-list" class="disaster-grid"></div><div class="medical-note"><strong>Catatan</strong><p>Saat bencana, ikuti arahan resmi BPBD/BNPB, pemerintah daerah, petugas setempat, dan jalur evakuasi yang tersedia.</p></div></div></section>
+
+  <!-- VIDEOS -->
+  <section class="screen" id="screen-videos" aria-labelledby="videos-title"><div class="container page-pad"><button class="back-button" type="button" data-screen="home">← Beranda</button><p class="eyebrow">🎥 BELAJAR VISUAL</p><h1 id="videos-title">Video Cara Penanganan</h1><p class="muted">Video dari organisasi pertolongan pertama dan sumber edukasi. Gunakan untuk belajar; saat darurat, utamakan bantuan profesional.</p><div id="video-grid" class="video-grid"></div><div class="medical-note"><strong>Video eksternal</strong><p>Video membutuhkan internet dan dapat berubah atau tidak tersedia sewaktu-waktu. Untuk produksi, pilih sumber terverifikasi yang sesuai protokol Indonesia.</p></div></div></section>
+
+  <!-- EDUCATION -->
+  <section class="screen" id="screen-education" aria-labelledby="education-title"><div class="container page-pad"><p class="eyebrow">🎓 EDUKASI</p><h1 id="education-title">Jangan Sampai Salah</h1><p class="muted">Kenali mitos, fakta, dan uji kesiapanmu.</p><div id="myth-list" class="myth-list"></div><div class="section-heading quiz-head"><div><p class="eyebrow">QUIZ</p><h2>Seberapa Siap Kamu?</h2></div><span id="quiz-score" class="score-pill" role="status" aria-live="polite" aria-label="Skor quiz">0 / 0</span></div><div class="quiz-card" id="quiz-card" role="region" aria-label="Quiz pertolongan pertama"></div><div class="section-heading"><div><p class="eyebrow">P3K</p><h2>Isi Kotak P3K</h2></div><button class="text-button" type="button" data-screen="checklist">Buka checklist →</button></div><div class="mini-checklist-preview" id="mini-checklist"></div><button class="btn btn-outline video-nav-button" type="button" data-screen="videos">▶️ Lihat Video Penanganan</button></div></section>
+
+  <!-- CHECKLIST -->
+  <section class="screen" id="screen-checklist" aria-labelledby="checklist-title"><div class="container page-pad"><button class="back-button" type="button" data-screen="education">← Edukasi</button><p class="eyebrow">🧰 KESIAPAN</p><h1 id="checklist-title">Isi Kotak P3K</h1><p class="muted">Gunakan daftar ini untuk menyiapkan perlengkapan dasar di rumah, sekolah, atau kendaraan.</p><div class="progress-summary"><div class="progress-copy"><strong id="check-count" aria-live="polite" aria-atomic="true">0 / 16 item tersedia</strong><span id="check-percent" aria-hidden="true">0%</span></div><div class="progress-track" role="progressbar" aria-label="Kelengkapan kotak P3K" aria-valuemin="0" aria-valuemax="16" aria-valuenow="0" aria-valuetext="0 dari 16 item tersedia"><span id="check-progress"></span></div></div><div id="checklist" class="checklist"></div></div></section>
+
+  <!-- SETTINGS -->
+  <section class="screen" id="screen-settings" aria-labelledby="settings-title">
+    <div class="container page-pad narrow-content">
+      <p class="eyebrow">⚙️ PENGATURAN</p>
+      <h1 id="settings-title">Atur FirstAidAssist</h1>
+      <p class="muted">Sesuaikan tampilan dan akses belajar tanpa perlu membuat akun.</p>
+
+      <div class="settings-stack">
+        <article class="settings-card">
+          <div>
+            <strong>🌓 Mode tampilan</strong>
+            <p>Ganti mode terang atau gelap sesuai kenyamanan.</p>
+          </div>
+          <button class="btn btn-outline" type="button" id="settings-theme-toggle">🌙 Gelap</button>
+        </article>
+
+        <article class="settings-card">
+          <div>
+            <strong>🎥 Video panduan</strong>
+            <p>Belajar melalui demonstrasi visual dari sumber edukasi.</p>
+          </div>
+          <button class="btn btn-outline" type="button" data-screen="videos">Lihat video</button>
+        </article>
+
+        <article class="settings-card">
+          <div>
+            <strong>🌪️ Kesiapsiagaan bencana</strong>
+            <p>Akses panduan singkat untuk gempa, banjir, kebakaran, dan bencana lainnya.</p>
+          </div>
+          <button class="btn btn-outline" type="button" data-screen="disasters">Lihat bencana</button>
+        </article>
+
+        <article class="settings-card">
+          <div>
+            <strong>🧰 Checklist P3K</strong>
+            <p>Periksa perlengkapan yang sudah tersedia di kotak P3K.</p>
+          </div>
+          <button class="btn btn-outline" type="button" data-screen="checklist">Buka checklist</button>
+        </article>
+
+        <article class="settings-card"><div><strong>📲 Pasang aplikasi</strong><p>Simpan di layar utama agar terbuka cepat, juga saat offline.</p></div><button class="btn btn-outline" type="button" id="install-btn">Pasang</button></article>
+
+        <article class="settings-card">
+          <div>
+            <strong>ℹ️ Versi aplikasi</strong>
+            <p>FirstAidAssist PWA. Konten sedang menunggu tinjauan tenaga medis.</p>
+          </div>
+          <span class="version">v1.3.1</span>
+        </article>
+      </div>
+
+      <article class="medical-note">
+        <strong>Disclaimer medis</strong>
+        <p>Aplikasi ini hanya berfungsi sebagai panduan pertolongan pertama awal dan bukan pengganti penanganan medis profesional.</p>
+      </article>
+
+      <article class="privacy-note app-privacy-note" role="note">
+        <div class="privacy-note-icon" aria-hidden="true">🔒</div>
+        <div>
+          <strong>Privasi versi ini</strong>
+          <p>Tanpa akun. Tema dan checklist disimpan lokal di browser. Suhu lokal memakai lokasi perangkat hanya saat kamu menekan ↻ (koordinat dikirim ke Open-Meteo). Video memuat YouTube dan font memuat Google Fonts. Hindari memasukkan data medis pribadi yang sensitif.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- SOS -->
+  <section class="screen" id="screen-sos" aria-labelledby="sos-title"><div class="container page-pad"><div class="sos-heading"><div><p class="eyebrow">🚨 DARURAT</p><h1 id="sos-title">Darurat / SOS</h1><p class="muted">Pilih layanan yang ingin dihubungi.</p></div><div class="sos-icon">SOS</div></div><div class="call-grid"><article class="call-card primary"><span class="call-symbol">🚑</span><div><p class="eyebrow">AMBULANS</p><strong class="phone-number">119</strong><p>Untuk bantuan medis darurat.</p></div><button type="button" class="btn btn-danger call-confirm" data-number="119" data-label="Ambulans">Panggil 119</button></article><article class="call-card"><span class="call-symbol">🚨</span><div><p class="eyebrow">PANGGILAN DARURAT</p><strong class="phone-number">112</strong><p>Nomor panggilan darurat.</p></div><button type="button" class="btn btn-danger call-confirm" data-number="112" data-label="Panggilan Darurat">Panggil 112</button></article><article class="call-card"><span class="call-symbol">👮</span><div><p class="eyebrow">POLISI</p><strong class="phone-number">110</strong><p>Untuk kebutuhan bantuan kepolisian.</p></div><button type="button" class="btn btn-outline-danger call-confirm" data-number="110" data-label="Polisi">Panggil 110</button></article><article class="call-card"><span class="call-symbol">🚒</span><div><p class="eyebrow">PEMADAM KEBAKARAN</p><strong class="phone-number">113</strong><p>Kebakaran.</p></div><button type="button" class="btn btn-outline-danger call-confirm" data-number="113" data-label="Pemadam Kebakaran">Panggil 113</button></article><article class="call-card"><span class="call-symbol">🛟</span><div><p class="eyebrow">BASARNAS</p><strong class="phone-number">115</strong><p>Pencarian dan pertolongan (orang hanyut, terjebak).</p></div><button type="button" class="btn btn-outline-danger call-confirm" data-number="115" data-label="Basarnas">Panggil 115</button></article><article class="call-card"><span class="call-symbol">🌪️</span><div><p class="eyebrow">BNPB</p><strong class="phone-number">117</strong><p>Laporan dan informasi bencana.</p></div><button type="button" class="btn btn-outline-danger call-confirm" data-number="117" data-label="BNPB">Panggil 117</button></article></div><article class="info-strip"><div class="info-icon">📞</div><div><strong>Yang perlu disampaikan ke operator</strong><p>1) Lokasi &amp; patokan terdekat. 2) Apa yang terjadi. 3) Jumlah &amp; kondisi korban. 4) Nomor telepon kamu. Jangan menutup telepon sebelum diminta.</p></div></article><div class="medical-note"><strong>Gunakan dengan hati-hati.</strong><p>Ketersediaan layanan berbeda menurut wilayah/operator (112 hanya aktif di daerah yang sudah terdaftar; bila gagal, coba 119 atau 118). Pada keadaan mengancam nyawa, segera cari bantuan lokal.</p></div></div></section>
+</main>
+
+<nav class="bottom-nav" aria-label="Navigasi utama">
+  <button type="button" data-screen="home" class="nav-item active"><span>⌂</span><small>Beranda</small></button>
+  <button type="button" data-screen="categories" class="nav-item"><span>🩹</span><small>Panduan</small></button>
+  <button type="button" data-screen="search" class="nav-item"><span>⌕</span><small>Cari</small></button>
+  <button type="button" data-screen="education" class="nav-item"><span>🎓</span><small>Edukasi</small></button>
+  <button type="button" data-screen="sos" class="nav-item nav-sos"><span>🚨</span><small>SOS</small></button>
+</nav>
+
+<div id="modal" class="modal" hidden aria-hidden="true"><div class="modal-backdrop" data-close-modal aria-hidden="true"></div><div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-text" tabindex="-1"><button class="modal-close" type="button" data-close-modal aria-label="Tutup dialog">×</button><p class="eyebrow">KONFIRMASI</p><h2 id="modal-title">Lanjutkan?</h2><p id="modal-text"></p><div class="modal-actions"><button class="btn btn-outline" type="button" data-close-modal>Batal</button><a id="modal-call" class="btn btn-danger" href="#">Lanjutkan</a></div></div></div>
+<div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+<script src="data.js" defer></script>
+<script src="app.js" defer></script>
+</body>
+</html>
